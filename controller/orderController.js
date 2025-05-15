@@ -1,0 +1,12 @@
+const orderlist = require('../model/orderModel');
+
+//pizza 목록 출력
+exports.myOrders = async (req, res) => {
+
+    try {
+        const order = await orderlist.myOrders();
+        res.status(200).json(order);
+    } catch (err) {
+        res.status(500).json({error:err.message});
+    }
+};
