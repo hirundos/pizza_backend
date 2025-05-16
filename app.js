@@ -10,8 +10,11 @@ app.use(cors());
 
 const loginRoutes = require('./routes/loginRoutes');
 const menuRoutes = require('./routes/menuRoutes');
+const orderRoutes = require('./routes/orderRoutes');
+
 app.use('/',loginRoutes);
 app.use('/',menuRoutes);
+app.use('/',orderRoutes);
 
 app.listen(3000, () => {
     console.log('Express server listening on port 3000');
