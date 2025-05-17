@@ -3,10 +3,9 @@ const config = require('../config/database')
 
 config.connectToDb();
 
-
    //내 주문 보기
    module.exports.myOrders = async (req,res) => {
-    const id = String(req.body.id);
+    const id = String(req.session.user.id);
 
     let sqlQuery = 
             `select o.order_id, pizza_id, quantity, date, time
@@ -28,12 +27,15 @@ config.connectToDb();
 module.exports.order = async(req, res) => {
   const sizes = req.body.lines.map(({ size }) => size);
   const names = req.body.lines.map(({ name }) => name);
+  const quantity = req.body.lines.map(({ quantity }) => quantity);
+  
+  const userId = String(req.session.user.id);
 
   const today = new Date();
   const pizzaDate = [today.getFullYear(), today.getMonth() + 1, today.getDate()].join('-');
   const pizzaTime = [today.getHours(), today.getMinutes(), today.getSeconds()].join(':');
 
-  let orderId = 1;
+  let orderId = 0;
   try {
     let result = await config.pool.query(`SELECT MAX(order_id)+1 AS id FROM orders`);
     orderId = result.rows?.[0]?.id ?? 1;
@@ -64,15 +66,15 @@ module.exports.order = async(req, res) => {
       if (i === 0) {
         await config.pool.query(`
           INSERT INTO orders(order_id, date, time, mem_id)
-          VALUES($1, $2, $3, '1')
-        `, [orderId, pizzaDate, pizzaTime]);
+          VALUES($1, $2, $3, $4)
+        `, [orderId, pizzaDate, pizzaTime, userId]);
       }
 
       // INSERT order_details
       await config.pool.query(`
         INSERT INTO order_details(order_details_id, order_id, pizza_id, quantity)
-        VALUES($1, $2, $3, 1)
-      `, [orderDetailsId, orderId, pizzaId]);
+        VALUES($1, $2, $3, $4)
+      `, [orderDetailsId, orderId, pizzaId, quantity[i]]);
     }
 
     return

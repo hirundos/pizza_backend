@@ -19,16 +19,22 @@ config.connectToDb();
 
    //로그인 시 id, pw 확인
    module.exports.loginCheck = async (req, res) => {
-    const id = String(req.body.id);
-    const pw = String(req.body.pw);
+    const mId = String(req.body.id);
+    const mPw = String(req.body.pw);
 
     let sqlQuery = `SELECT count(*) as count FROM MEM WHERE MEM_ID = $1 AND MEM_PWD = $2`;
     
     try{
 
-      const result = await config.pool.query(sqlQuery, [id, pw]);
+      const result = await config.pool.query(sqlQuery, [mId, mPw]);
 
-      return result.rows[0].count;
+      if(result.rows[0].count > 0 ){
+        req.session.user = {
+          id: mId
+        };
+      }
+
+      return result.rows[0];
     } catch (err) {
       throw new Error('Database query failed '+ err.message);
     }

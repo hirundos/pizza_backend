@@ -15,8 +15,8 @@ exports.loginCheck = async (req, res) => {
   
     try{
         const products = await loginModel.loginCheck(req,res);
-        console.log(products);
-        if(products > 0){
+
+        if(products.count > 0){
             res.status(200).json({ message: '로그인 성공!'  });
         } else{
             res.status(401).json({message : 'ID 또는 비밀번호가 일치하지 않습니다.'});
