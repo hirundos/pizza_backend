@@ -1,4 +1,4 @@
-const loginModel = require('../model/loginModel');
+const loginModel = require('./loginModel');
 
 //회원가입
 exports.registerUser = async (req, res) => {

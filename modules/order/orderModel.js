@@ -1,26 +1,26 @@
 
-const config = require('../config/database')
+const config = require('../../config/database')
 
 config.connectToDb();
 
-   //내 주문 보기
-   module.exports.myOrders = async (req,res) => {
-    const id = String(req.session.user.id);
+//내 주문 보기
+module.exports.myOrders = async (req,res) => {
+  const id = String(req.session.user.id);
 
-    let sqlQuery = 
-            `select o.order_id, pizza_id, quantity, date, time
-            from orders o 
-            join order_details d
-            on o.order_id = d.order_id
-            where mem_id=$1
-            order by date desc, time desc`;
+  let sqlQuery = 
+    `select o.order_id, pizza_id, quantity, date, time
+    from orders o 
+    join order_details d
+    on o.order_id = d.order_id
+    where mem_id=$1
+    order by date desc, time desc`;
     
-    try{    
-      const result = await config.pool.query(sqlQuery, [id]);
-      return result.rows;
-    } catch (err) {
-      throw new Error('Database query failed '+ err.message);
-    }
+  try{    
+    const result = await config.pool.query(sqlQuery, [id]);
+    return result.rows;
+  } catch (err) {
+    throw new Error('Database query failed '+ err.message);
+  }
 };
 
 //주문하기
@@ -79,6 +79,20 @@ module.exports.order = async(req, res) => {
 
     return
 
+  } catch (err) {
+    throw new Error('Database query failed '+ err.message);
+  }
+};
+
+module.exports.pizzas = async (req,res) => {
+  const id = String(req.session.user.id);
+
+  let sqlQuery = 
+    `select name from pizza_types pt`;
+    
+  try{    
+    const result = await config.pool.query(sqlQuery);
+    return result.rows;
   } catch (err) {
     throw new Error('Database query failed '+ err.message);
   }

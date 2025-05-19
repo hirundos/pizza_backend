@@ -24,9 +24,9 @@ app.use(session({
     }
 }));
 
-const loginRoutes = require('./routes/loginRoutes');
-const menuRoutes = require('./routes/menuRoutes');
-const orderRoutes = require('./routes/orderRoutes');
+const loginRoutes = require('./modules/login/loginRoutes');
+const menuRoutes = require('./modules/menu/menuRoutes');
+const orderRoutes = require('./modules/order/orderRoutes');
 
 app.use('/api',loginRoutes);
 app.use('/api',menuRoutes);

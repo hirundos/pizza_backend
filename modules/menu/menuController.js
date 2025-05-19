@@ -1,4 +1,4 @@
-const menulist = require('../model/menuModel');
+const menulist = require('./menuModel');
 
 //pizza 목록 출력
 exports.getMenus = async (req, res) => {

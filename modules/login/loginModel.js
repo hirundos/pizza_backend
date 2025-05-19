@@ -1,4 +1,4 @@
-const config = require('../config/database');
+const config = require('../../config/database');
 
 config.connectToDb();
 
