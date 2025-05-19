@@ -26,3 +26,15 @@ exports.loginCheck = async (req, res) => {
     }
         
 };
+
+// logout 컨트롤러
+exports.logout = async (req, res) => {
+  try {
+    await loginModel.logout(req,res);
+    res.clearCookie('connect.sid'); 
+    res.status(200).json({ message: '로그아웃 성공' });
+  } catch (err) {
+    console.error('세션 삭제 실패:', err);
+    res.status(500).json({ message: '로그아웃 실패' });
+  }
+};

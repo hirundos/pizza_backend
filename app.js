@@ -9,12 +9,12 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cors({
-  origin: 'http://localhost:5500', 
+  origin: process.env.CLIENT_ORIGIN, 
   credentials: true
 }));
 
 app.use(session({
-    secret: 'secret-key',
+    secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -28,9 +28,9 @@ const loginRoutes = require('./routes/loginRoutes');
 const menuRoutes = require('./routes/menuRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 
-app.use('/',loginRoutes);
-app.use('/',menuRoutes);
-app.use('/',orderRoutes);
+app.use('/api',loginRoutes);
+app.use('/api',menuRoutes);
+app.use('/api',orderRoutes);
 
 app.listen(3000, () => {
     console.log('Express server listening on port 3000');
