@@ -12,7 +12,7 @@ module.exports.myOrders = async (req,res) => {
     from orders o 
     join order_details d
     on o.order_id = d.order_id
-    where mem_id=$1
+    where mem_id = $1
     order by date desc, time desc`;
     
   try{    
