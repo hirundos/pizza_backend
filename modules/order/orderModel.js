@@ -8,12 +8,12 @@ module.exports.myOrders = async (req,res) => {
   const id = String(req.session.user.id);
 
   let sqlQuery = 
-    `select o.order_id, pizza_id, quantity, date, time
-    from orders o 
-    join order_details d
-    on o.order_id = d.order_id
-    where mem_id = $1
-    order by date desc, time desc`;
+    `SELECT o.order_id, pizza_id, quantity, date, time
+    FROM orders o 
+    JOIN order_details d
+    ON o.order_id = d.order_id
+    WHERE mem_id = $1
+    ORDER BY date DESC, time DESC`;
     
   try{    
     const result = await config.pool.query(sqlQuery, [id]);
@@ -88,7 +88,7 @@ module.exports.pizzas = async (req,res) => {
   const id = String(req.session.user.id);
 
   let sqlQuery = 
-    `select name from pizza_types pt`;
+    `SELECT name FROM pizza_types pt`;
     
   try{    
     const result = await config.pool.query(sqlQuery);

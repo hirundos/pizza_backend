@@ -7,7 +7,7 @@ module.exports.registerUser = async(req, res) => {
 
   const { id , pw , name} = req.body;
 
-  let sqlQuery = `INSERT INTO MEM(MEM_ID, MEM_PWD, MEM_NM) 
+  let sqlQuery = `INSERT INTO mem(mem_id, mem_pwd, mem_nm) 
     VALUES($1, $2, $3)`;
     
   try{
@@ -22,7 +22,7 @@ module.exports.loginCheck = async (req, res) => {
   const mId = String(req.body.id);
   const mPw = String(req.body.pw);
 
-  let sqlQuery = `SELECT count(*) as count FROM MEM WHERE MEM_ID = $1 AND MEM_PWD = $2`;
+  let sqlQuery = `SELECT count(*) as count FROM mem WHERE mem_id = $1 AND mem_pwd = $2`;
     
   try{
 
