@@ -28,10 +28,10 @@ const loginRoutes = require('./modules/login/loginRoutes');
 const menuRoutes = require('./modules/menu/menuRoutes');
 const orderRoutes = require('./modules/order/orderRoutes');
 
-app.use('/api',loginRoutes);
-app.use('/api',menuRoutes);
-app.use('/api',orderRoutes);
+app.use('/',loginRoutes);
+app.use('/',menuRoutes);
+app.use('/',orderRoutes);
 
-app.listen(3000, () => {
+app.listen(3000, '0.0.0.0', () => {
     console.log('Express server listening on port 3000');
-})
+});
