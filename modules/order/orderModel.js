@@ -88,7 +88,7 @@ module.exports.pizzas = async (req,res) => {
   const id = String(req.session.user.id);
 
   let sqlQuery = 
-    `SELECT name FROM pizza_types pt`;
+    `SELECT name, img_url FROM pizza_types pt`;
     
   try{    
     const result = await config.pool.query(sqlQuery);
