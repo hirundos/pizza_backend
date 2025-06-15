@@ -28,7 +28,8 @@ module.exports.order = async(req, res) => {
   const sizes = req.body.lines.map(({ size }) => size);
   const names = req.body.lines.map(({ name }) => name);
   const quantity = req.body.lines.map(({ quantity }) => quantity);
-  
+  const branch = req.body.branchId;
+
   const userId = String(req.session.user.id);
 
   const today = new Date();
@@ -65,9 +66,9 @@ module.exports.order = async(req, res) => {
       // INSERT orders (한 번만 실행되게 위치 조정)
       if (i === 0) {
         await config.pool.query(`
-          INSERT INTO orders(order_id, date, time, mem_id)
-          VALUES($1, $2, $3, $4)
-        `, [orderId, pizzaDate, pizzaTime, userId]);
+          INSERT INTO orders(order_id, date, time, mem_id, branch)
+          VALUES($1, $2, $3, $4, $5)
+        `, [orderId, pizzaDate, pizzaTime, userId, branch]);
       }
 
       // INSERT order_details
