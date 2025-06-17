@@ -7,6 +7,9 @@ const pool = new sql.Pool({
   database: String(process.env.DB_DATABASE),
   password: String(process.env.DB_PASSWORD),
   port: Number(process.env.DB_PORT),
+  ssl: {
+    rejectUnauthorized: false, // RDS에선 보통 이걸 꺼야 작동
+  },
 });
 
 
